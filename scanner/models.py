@@ -24,3 +24,16 @@ class PortResult:
     banner: Optional[str] = None
     latency_ms: Optional[float] = None
 
+@dataclass
+class ScanResult:
+    target: str
+    started_at: str
+    finished_at: Optional[str] = None
+    ports: list[PortResult] = field(default_factory=list)
+
+    @property
+    def open_ports(self):
+        return [
+            result for result in self.ports
+            if result.state == PortState.OPEN
+        ]
