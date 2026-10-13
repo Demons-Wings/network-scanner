@@ -46,6 +46,10 @@ def build_parser():
         help="Save results to JSON file"
     )
 
+    return parser
+
+
+
 
 
 
