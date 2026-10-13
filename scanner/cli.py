@@ -1,5 +1,6 @@
 import argparse
 
+from scanner.config import ScanConfig
 from scanner.discovery.target import (
     parse_ports,
     validate_target
@@ -47,6 +48,55 @@ def build_parser():
     )
 
     return parser
+
+
+def main():
+	parser = build_parser()
+	args = parser.parse_args()
+
+	try:
+        target = validate_target(args.target)
+        ports = parse_ports(args.ports)
+
+    except ValueError as error:
+    	parser.error(str(error))
+
+    config = ScanConfig(
+        timeout=args.timeout,
+        workers=args.workers,
+        udp=args.udp
+    )
+
+    scanner = Scanner(config)
+
+    print(
+        f"[+] Scanning {target}"
+        f" ({len(ports)} ports)"
+    )
+
+    result = scanner.scan(
+        target,
+        ports
+    )
+
+    print_result(result)
+
+
+    if args.json:
+
+        save_json(
+            result,
+            args.json
+        )
+
+        print(
+            f"[+] Results saved to {args.json}"
+        )
+
+
+
+
+
 
 
 
