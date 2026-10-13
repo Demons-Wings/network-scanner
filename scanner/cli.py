@@ -1,0 +1,40 @@
+import argparse
+
+from scanner.discovery.target import (
+    parse_ports,
+    validate_target
+)
+
+from scanner.engine.scanner import Scanner
+from scanner.output.console import print_result
+from scanner.output.json import save_json
+
+def build_parser():
+	parser = argparse.ArgumentParser(
+        description="Modular Network Port Scanner"
+    )
+    parser.add_argument(
+        "target",
+        help="IPv4/IPv6 address or hostname"
+    )
+    parser.add_argument(
+    	"-p",
+        "--ports",
+        default="1-1024",
+        help="Ports: 80,443 or 1-1024"
+    )
+
+    parser.add_argument(
+        "--udp",
+        action="store_true",
+        help="Enable UDP scanning"
+    )
+    parser.add_argument(
+        "-t",
+        "--timeout",
+        type=float,
+        default=1.0
+    )
+    
+
+
