@@ -35,6 +35,17 @@ def build_parser():
         type=float,
         default=1.0
     )
-    
+    parser.add_argument(
+        "-w",
+        "--workers",
+        type=int,
+        default=50
+    )
+    parser.add_argument(
+        "--json",
+        help="Save results to JSON file"
+    )
+
+
 
 
